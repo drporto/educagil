@@ -17,6 +17,12 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   double size = 250.0;
+  static const String default_user = "Diego";
+  static const String default_passwd = "1234";
+
+  bool tryToLogin(String user, String passwd){
+    return (user == default_user) && (passwd == default_passwd);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,9 +127,21 @@ class _LoginState extends State<Login> {
                     margin: EdgeInsets.all(5),
                     child: ElevatedButton(
                       onPressed: () {
-                        var classroom = context.read<ClassModel>();
-                        classroom.setLogged(true);
-                        Navigator.pushNamed(context, '/home');
+                        bool loginSuccess = tryToLogin(usuarioController.text,
+                            senhaController.text);
+                        if (loginSuccess){
+                          var classroom = context.read<ClassModel>();
+                          classroom.setLogged(true);
+                          Navigator.pushNamed(context, '/home');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Bem-vindo, '+default_user+'!'))
+                          );
+                        }else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Usuário e/ou senha incorretos.'))
+                          );
+                        }
                       },
                       child: const Text('Conectar'),
                     ),

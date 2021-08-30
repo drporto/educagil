@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:educagil/ui/home.dart';
 import 'package:educagil/ui/login.dart';
