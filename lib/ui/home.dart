@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+//import 'dart:html' as html;
 
 import 'package:educagil/ui/myappbar.dart';
 import 'package:educagil/ui/mydrawer.dart';
@@ -173,9 +173,9 @@ class Turma extends StatelessWidget {
         Expanded(
           flex: 12,
           child: GestureDetector(
-            onTap: () => {
-              html.window.open('https://agilizabr.com/treinamentos/', "_blank")
-            },
+            //onTap: () => {
+            //  html.window.open('https://agilizabr.com/treinamentos/', "_blank")
+            //},
             child: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 10),
