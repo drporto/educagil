@@ -19,6 +19,12 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   double size = 250.0;
+  static const String default_user = "Diego";
+  static const String default_passwd = "1234";
+
+  bool tryToLogin(String user, String passwd){
+    return (user == default_user) && (passwd == default_passwd);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,21 +123,30 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          Provider.of<ClassroomModel>(context, listen: false)
-                              .setLogged(true);
-                          Provider.of<ClassroomModel>(context, listen: false)
-                              .getTurmasFromDatabase();
-                          Provider.of<ClassroomModel>(
-                            context,
-                            listen: false,
-                          ).getTurmaInfoFromDatabaseByIndex(0).then((result) {
-                            if (result)
-                              Navigator.pushNamed(context, '/classroom');
-                            else
-                              Navigator.pushNamed(context, '/home');
-                          });
-                          // var classroomModel = context.read<ClassroomModel>();
-                          // classroomModel.setLogged(true);
+                          bool loginSuccess = tryToLogin(usuarioController.text, senhaController.text);
+                          if (loginSuccess){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Bem-vindo, '+default_user+'!'))
+                            );
+                            Provider.of<ClassroomModel>(context, listen: false)
+                                .setLogged(true);
+                            Provider.of<ClassroomModel>(context, listen: false)
+                                .getTurmasFromDatabase();
+                            Provider.of<ClassroomModel>(
+                              context,
+                              listen: false,
+                            ).getTurmaInfoFromDatabaseByIndex(0).then((result) {
+                              if (result)
+                                Navigator.pushNamed(context, '/classroom');
+                              else
+                                Navigator.pushNamed(context, '/home');
+                            });
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Usuário e/ou senha incorretos.'))
+                            );
+                          }
                         }
                       },
                       child: const Text('Conectar'),
