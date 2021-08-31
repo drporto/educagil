@@ -26,6 +26,40 @@ class _ClassroomState extends State<Classroom> {
   //double size = 250.0;
   //double dividerHeight = 25.0;
 
+  Widget makeMural(context, classroomModel, child){
+    //substituir pelo código do mural
+    return Text(
+      'Mural de ${classroomModel.turmaSelecionada!.name}',
+      style: Theme.of(context).textTheme.headline5,
+    );
+  }
+
+  Widget makeMateriais(context, classroomModel, child){
+    //substituir pelo código da página de materiais
+    return Text(
+      'Materiais de ${classroomModel.turmaSelecionada!.name}',
+      style: Theme.of(context).textTheme.headline5,
+    );
+  }
+
+  Widget makeParticipantes(context, classroomModel, child){
+    //substituir pelo código da página de participantes
+    return Text(
+      'Participantes de ${classroomModel.turmaSelecionada!.name}',
+      style: Theme.of(context).textTheme.headline5,
+    );
+  }
+
+  Widget escolherAba(tabIndex, context, classroomModel, child){
+    if (tabIndex == 0){
+      return this.makeMural(context, classroomModel, child);
+    }else if (tabIndex == 1){
+      return this.makeMateriais(context, classroomModel, child);
+    }else{
+      return this.makeParticipantes(context, classroomModel, child);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +77,8 @@ class _ClassroomState extends State<Classroom> {
               //margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.centerLeft,
               child: Consumer<ClassroomModel>(
-                builder: (context, classroomModel, child) => Text(
-                  '${_nameSelectedItem[_selectedItem]} ${classroomModel.turmaSelecionada!.name}',
-                  style: Theme.of(context).textTheme.headline5,
+                builder: (context, classroomModel, child) => this.escolherAba(
+                    _selectedItem, context, classroomModel, child
                 ),
               ),
             ),
