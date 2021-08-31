@@ -1,8 +1,10 @@
-import 'package:educagil/appstate/classmodel.dart';
+import 'package:educagil/ui/myappbar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:educagil/ui/mydrawer.dart';
 
 import 'package:provider/provider.dart';
+import 'package:educagil/models/classroommodel.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -23,15 +25,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       drawer: MyDrawer(),
       /////////////////////////////////////////////////////////////////
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        toolbarHeight: 60.0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'EducÁgil',
-          style: Theme.of(context).primaryTextTheme.headline5,
-        ),
+      appBar: MyAppBar(
+        height: 60,
       ),
       /////////////////////////////////////////////////////////////////
       body: Center(
@@ -121,9 +116,23 @@ class _LoginState extends State<Login> {
                     margin: EdgeInsets.all(5),
                     child: ElevatedButton(
                       onPressed: () {
-                        var classroom = context.read<ClassModel>();
-                        classroom.setLogged(true);
-                        Navigator.pushNamed(context, '/home');
+                        if (_formKey.currentState!.validate()) {
+                          Provider.of<ClassroomModel>(context, listen: false)
+                              .setLogged(true);
+                          Provider.of<ClassroomModel>(context, listen: false)
+                              .getTurmasFromDatabase();
+                          Provider.of<ClassroomModel>(
+                            context,
+                            listen: false,
+                          ).getTurmaInfoFromDatabaseByIndex(0).then((result) {
+                            if (result)
+                              Navigator.pushNamed(context, '/classroom');
+                            else
+                              Navigator.pushNamed(context, '/home');
+                          });
+                          // var classroomModel = context.read<ClassroomModel>();
+                          // classroomModel.setLogged(true);
+                        }
                       },
                       child: const Text('Conectar'),
                     ),
