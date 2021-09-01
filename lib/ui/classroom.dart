@@ -10,7 +10,6 @@ import 'package:educagil/models/classroommodel.dart';
 import 'package:educagil/ui/feed_item.dart';
 import 'package:educagil/ui/classmate.dart';
 
-
 class Classroom extends StatefulWidget {
   Classroom({Key? key}) : super(key: key);
 
@@ -30,13 +29,16 @@ class _ClassroomState extends State<Classroom> {
   //double size = 250.0;
   //double dividerHeight = 25.0;
 
-  Widget makeMural(context, classroomModel, child) {
-    //substituir pelo código do mural
+  Widget makeMural(tabIndex, context, classroomModel, child) {
 
+    List<FeedItem> feedItems = [];
+    for(DiscussaoTurma disc in classroomModel.discussoes){
+      feedItems.add(FeedItem(disc: disc));
+    }
     return SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 10.0),
+        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 0),
         child: FeedColumn(feedName: "${classroomModel.turmaSelecionada!.name}",
-            itemList: FeedItem.getFeedItems())
+            itemList: feedItems)
     );
   }
 
@@ -59,7 +61,7 @@ class _ClassroomState extends State<Classroom> {
 
   Widget escolherAba(tabIndex, context, classroomModel, child){
     if (tabIndex == 0){
-      return this.makeMural(context, classroomModel, child);
+      return this.makeMural(tabIndex, context, classroomModel, child);
     }else if (tabIndex == 1){
       return this.makeMateriais(context, classroomModel, child);
     }else{
