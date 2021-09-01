@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedColumn extends StatelessWidget {
+   static void launchURLBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      await launch(url);
+    }
+  }
+
   final List<FeedItem> itemList;
   final String feedName;
 
@@ -32,13 +41,15 @@ class FeedItem extends StatelessWidget {
   final String textContent;
   final String date;
   final String link;
+  final String linkName;
 
   const FeedItem({
     Key? key,
     required this.userName,
     required this.textContent,
     required this.date,
-    required this.link
+    required this.link,
+    required this.linkName
   }) : super(key: key);
 
   @override
@@ -62,24 +73,33 @@ class FeedItem extends StatelessWidget {
     ];
 
     if (this.link.length > 0){
-      String link_type = "no_type";
+      Icon linkIcon = Icon(Icons.link);
       if (this.link.contains(".pdf")){
-        link_type = "pdf";
+        linkIcon = Icon(Icons.picture_as_pdf);
       }else if (this.link.contains("youtube.")){
-        link_type = "youtube";
+        linkIcon = Icon(Icons.ondemand_video);
       }
-      /*TextStyle? link_style = Theme
+      TextStyle? linkStyle = Theme
           .of(context)
-          .accentTextTheme
+          .textTheme
           .subtitle1;
 
-      link_style?.apply(decoration: TextDecoration.underline);*/
-
+      linkStyle = linkStyle?.apply(decoration: TextDecoration.underline,
+        fontSizeFactor: 0.8);
+      String content = this.link;
+      if (this.linkName.length > 0){
+        content = this.linkName;
+      }
       elements.add(SizedBox(height: 10));
-      elements.add(Text(
-          this.link,
-          style: Theme
-              .of(context).textTheme.subtitle1
+      elements.add(ListTile(
+          leading: linkIcon,
+          title: GestureDetector(
+            onTap: (){ FeedColumn.launchURLBrowser(this.link); },
+            child: Text(
+              content,
+              style: linkStyle
+            )
+          )
       ));
     }
 
@@ -100,28 +120,37 @@ class FeedItem extends StatelessWidget {
           textContent: "Boa tarde pessoal, só para lembrar que nosso encontro hoje"
               +" começa 30 minutos mais tarde, às 19:30. Até lá.",
           date: "21/06/21 às 12:57",
-          link: ""),
+          link: "",
+          linkName: ""
+      ),
       FeedItem(userName: "Daniel Cabral",
           textContent: "Boa tarde. Achei um vídeo introdutório"
               +" interessante no youtube. Pode ajudar o"
               +" pessoal a se achar por lá. Link abaixo.",
           date: "21/06/21 às 12:57",
-          link: "https://repositorio.ufsc.br/xmlui/bitstream/handle/123456789/130043/TCC%20Final.pdf"),
+          link: "https://www.youtube.com/watch?v=cT_X4_n0NJ4",
+          linkName: "Métodologia Ágil 2021"
+      ),
       FeedItem(userName: "Pitágoras Alves",
           textContent: "Olá a todos. Eu me chamo Pitágoras, me inscrevi no treinamento apenas ontem."
               +" Gostaria de recuperar essas duas aulas que perdi."
               +" Alguém teria alguma recomendação?",
           date: "21/06/21 às 11:25",
-          link: ""),
+          link: "",
+          linkName: ""
+      ),
       FeedItem(userName: "Diego Porto",
           textContent: "Professora Márcia, as atividades da aula 02 são todas para serem "
               +" entregues um dia antes da próxima aula, correto?",
           date: "19/06/21 às 08:37",
-          link: ""),
+          link: "",
+          linkName: ""
+      ),
       FeedItem(userName: "Daniel Torres",
           textContent: "Gostei bastante da leitura desse TCC sobre a implantação da cultura da agilidade.",
           date: "Postado em 18/06/21 às 15:03",
-          link: "https://repositorio.ufsc.br/xmlui/bitstream/handle/123456789/130043/TCC%20Final.pdf"
+          link: "https://repositorio.ufsc.br/xmlui/bitstream/handle/123456789/130043/TCC%20Final.pdf",
+          linkName: "IMPLANTAÇÃO DA METODOLOGIA ÁGIL SCRUM EM UM AMBIENTE DE DESENVOLVIMENTO"
       )
     ];
   }

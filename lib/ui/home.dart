@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:educagil/ui/myappbar.dart';
 import 'package:educagil/ui/mydrawer.dart';
-
+import 'package:educagil/ui/feed_item.dart';
 // import 'package:provider/provider.dart';
 // import 'package:educagil/models/classroommodel.dart';
 
@@ -173,9 +173,9 @@ class Turma extends StatelessWidget {
         Expanded(
           flex: 12,
           child: GestureDetector(
-            //onTap: () => {
-            //  html.window.open('https://agilizabr.com/treinamentos/', "_blank")
-            //},
+            onTap: () => {
+              FeedColumn.launchURLBrowser('https://agilizabr.com/treinamentos/')
+            },
             child: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 10),
