@@ -8,7 +8,7 @@ Versão inicial do ambiente de ensino EducÁgil
 - Flutter 2.2.3, Dart 2.13.4
 
 ## Como executar
-- Obter o repositório: git clone https://github.com/drporto.git
+- Obter o repositório: git clone https://github.com/drporto/educagil.git
 - Garantir que está tudo okay com: flutter doctor
 - Flutter clean
 - Flutter pub get
