@@ -189,7 +189,9 @@ class FeedItem extends StatelessWidget {
                 )
             )
           ),
-          expandingList
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10,6.0,10.0,0),
+            child: expandingList)
         ]
       );
     }else{

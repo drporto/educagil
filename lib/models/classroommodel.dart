@@ -79,6 +79,8 @@ class ClassroomModel extends ChangeNotifier {
   Future<void> _getDiscussoesFromDatabase(int idTurma) async {
     if (idTurma == 1){
       _discussoes = DiscussaoTurma.getFeedItems();
+    }else if(idTurma == 2){
+      _discussoes = DiscussaoTurma.getFeedItems2();
     }else{
       _discussoes = [];
     }
@@ -198,6 +200,24 @@ class DiscussaoTurma {
     ];
   }
 
+  static List<DiscussaoTurma> getFeedItems2(){
+    return [
+      DiscussaoTurma(userName: "Daniel Cabral",
+          textContent: "Olá. Alguém sabe quando será a primeira aula?",
+          date: "21/06/21 às 11:25",
+          link: "",
+          linkName: "",
+          comments: [
+            DiscussaoTurma(userName: "Daniel Torres",
+                textContent: "Não tenho a mínima ideia.",
+                date: "21/06/21 às 12:07",
+                link: "",
+                linkName: ""
+            ),
+          ]
+      )
+    ];
+  }
 }
 
 class MaterialTurma {
