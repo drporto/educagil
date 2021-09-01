@@ -1,4 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
+import 'package:educagil/ui/classmate.dart';
 import 'package:educagil/ui/myappbar.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ import 'package:educagil/ui/mydrawer.dart';
 import 'package:provider/provider.dart';
 import 'package:educagil/models/classroommodel.dart';
 import 'package:educagil/ui/feed_item.dart';
+import 'package:educagil/ui/classmate.dart';
 
 class Classroom extends StatefulWidget {
   Classroom({Key? key}) : super(key: key);
@@ -27,13 +29,16 @@ class _ClassroomState extends State<Classroom> {
   //double size = 250.0;
   //double dividerHeight = 25.0;
 
-  Widget makeMural(context, classroomModel, child) {
-    //substituir pelo código do mural
+  Widget makeMural(tabIndex, context, classroomModel, child) {
 
+    List<FeedItem> feedItems = [];
+    for(DiscussaoTurma disc in classroomModel.discussoes){
+      feedItems.add(FeedItem(disc: disc));
+    }
     return SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 10.0),
+        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 0),
         child: FeedColumn(feedName: "${classroomModel.turmaSelecionada!.name}",
-            itemList: FeedItem.getFeedItems())
+            itemList: feedItems)
     );
   }
 
@@ -47,15 +52,16 @@ class _ClassroomState extends State<Classroom> {
 
   Widget makeParticipantes(context, classroomModel, child){
     //substituir pelo código da página de participantes
-    return Text(
-      'Participantes de ${classroomModel.turmaSelecionada!.name}',
-      style: Theme.of(context).textTheme.headline5,
+    return SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 10.0),
+        child: ClassmateColumn(feedName: "${classroomModel.turmaSelecionada!.name}",
+            itemList: Classmate.getClassmates())
     );
   }
 
   Widget escolherAba(tabIndex, context, classroomModel, child){
     if (tabIndex == 0){
-      return this.makeMural(context, classroomModel, child);
+      return this.makeMural(tabIndex, context, classroomModel, child);
     }else if (tabIndex == 1){
       return this.makeMateriais(context, classroomModel, child);
     }else{

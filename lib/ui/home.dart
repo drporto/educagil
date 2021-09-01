@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:educagil/ui/myappbar.dart';
 import 'package:educagil/ui/mydrawer.dart';
-
+import 'package:educagil/ui/feed_item.dart';
 // import 'package:provider/provider.dart';
 // import 'package:educagil/models/classroommodel.dart';
 
@@ -32,12 +32,13 @@ class _HomeState extends State<Home> {
           children: [
             Container(
               //margin: EdgeInsets.symmetric(vertical: 5),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 'Treinamentos Futuros',
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
+            SizedBox(height: 20.0),
             ColecaoTurmas(
               height: this.size,
               children: [
@@ -61,12 +62,13 @@ class _HomeState extends State<Home> {
             ),
             Container(
               //margin: EdgeInsets.symmetric(vertical: 5),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 'Treinamentos Em Andamento',
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
+            SizedBox(height: 20.0),
             ColecaoTurmas(
               height: this.size,
               children: [
@@ -85,10 +87,11 @@ class _HomeState extends State<Home> {
             ),
             Container(
               //margin: EdgeInsets.symmetric(vertical: 0),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text('Treinamentos Concluídos',
                   style: Theme.of(context).textTheme.headline5),
             ),
+            SizedBox(height: 20.0),
             ColecaoTurmas(
               height: this.size,
               children: [
@@ -158,35 +161,37 @@ class Turma extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            child: Text(
-              this.text,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 12,
-          child: GestureDetector(
-            //onTap: () => {
-            //  html.window.open('https://agilizabr.com/treinamentos/', "_blank")
-            //},
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            flex: 2,
             child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              width: this.width,
-              child: Image(
-                image: AssetImage(this.image),
+              child: Text(
+                this.text,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 12,
+            child: GestureDetector(
+              onTap: () => {
+                FeedColumn.launchURLBrowser('https://agilizabr.com/treinamentos/')
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                width: this.width,
+                child: Image(
+                  image: AssetImage(this.image),
+                ),
+              ),
+            ),
+          ),
+        ],
+      )
     );
   }
 }
