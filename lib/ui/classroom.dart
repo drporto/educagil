@@ -6,6 +6,7 @@ import 'package:educagil/ui/mydrawer.dart';
 
 import 'package:provider/provider.dart';
 import 'package:educagil/models/classroommodel.dart';
+import 'package:educagil/ui/feed_item.dart';
 
 class Classroom extends StatefulWidget {
   Classroom({Key? key}) : super(key: key);
@@ -26,11 +27,13 @@ class _ClassroomState extends State<Classroom> {
   //double size = 250.0;
   //double dividerHeight = 25.0;
 
-  Widget makeMural(context, classroomModel, child){
+  Widget makeMural(context, classroomModel, child) {
     //substituir pelo código do mural
-    return Text(
-      'Mural de ${classroomModel.turmaSelecionada!.name}',
-      style: Theme.of(context).textTheme.headline5,
+
+    return SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 10.0),
+        child: FeedColumn(feedName: "${classroomModel.turmaSelecionada!.name}",
+            itemList: FeedItem.getFeedItems())
     );
   }
 
