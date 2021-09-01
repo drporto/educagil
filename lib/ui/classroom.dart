@@ -1,4 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
+import 'package:educagil/ui/classmate.dart';
 import 'package:educagil/ui/myappbar.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ import 'package:educagil/ui/mydrawer.dart';
 import 'package:provider/provider.dart';
 import 'package:educagil/models/classroommodel.dart';
 import 'package:educagil/ui/feed_item.dart';
+import 'package:educagil/ui/classmate.dart';
+
 
 class Classroom extends StatefulWidget {
   Classroom({Key? key}) : super(key: key);
@@ -47,9 +50,10 @@ class _ClassroomState extends State<Classroom> {
 
   Widget makeParticipantes(context, classroomModel, child){
     //substituir pelo código da página de participantes
-    return Text(
-      'Participantes de ${classroomModel.turmaSelecionada!.name}',
-      style: Theme.of(context).textTheme.headline5,
+    return SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(6.0, 10.0, 6.0, 10.0),
+        child: ClassmateColumn(feedName: "${classroomModel.turmaSelecionada!.name}",
+            itemList: Classmate.getClassmates())
     );
   }
 
